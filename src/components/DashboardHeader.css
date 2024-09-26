@@ -1,0 +1,14 @@
+.dashboard-header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    margin-left: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .dashboard-header h1 {
+    font-size: 24px;
+  }
+  
