@@ -1,0 +1,103 @@
+.history-page {
+  background-color: #f7f7f7; /* Light grey background for the main history page */
+  padding: 30px;
+  border-radius: 10px; /* Slightly increased border radius */
+  margin-left: 0px; /* No left margin */
+  margin-right: 0px; /* No right margin */
+  max-width: calc(100%); /* Fill the available width */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
+}
+
+.history-header {
+  font-size: 32px;
+  color: #1c0869; /* Theme color */
+  margin-bottom: 20px;
+  text-align: center; /* Center header text */
+}
+
+.search-container {
+  display: flex;
+  justify-content: center; /* Center search bar */
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  flex-grow: 1;
+  padding: 20px;
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 4px;
+  background-color: #fff; /* White background for input */
+  color: #333; /* Dark text */
+  transition: border-color 0.3s; /* Smooth transition for focus */
+}
+
+.search-bar:focus {
+  border-color: #1c0869; /* Focus border color */
+  outline: none; /* Remove outline */
+}
+
+.search-button {
+  padding: 10px 20px;
+  margin-left: 10px;
+  background-color: #1c0869; /* Theme color */
+  border: none;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s; /* Smooth transition for hover */
+}
+
+.search-button:hover {
+  background-color: #0056b3; /* Darker shade on hover */
+}
+
+.booking-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Two columns per row */
+  gap: 50px;
+}
+
+.booking-item {
+  background-color: #ffffff; /* White background for booking items */
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for 3D effect */
+  transition: transform 0.3s; /* Smooth transition for hover */
+}
+
+.booking-item:hover {
+  transform: translateY(-5px); /* Lift effect on hover */
+}
+
+.booking-details {
+  color: #333; /* Darker text for better readability */
+  padding: 10px;
+}
+
+.booking-edit {
+  text-align: right;
+}
+
+.edit-link,
+.delete-link {
+  color: #1c0869; /* Theme color for edit and delete links */
+  text-decoration: none;
+  padding: 5px 10px; /* Padding for buttons */
+  border-radius: 4px; /* Rounded corners */
+  transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover */
+}
+
+.edit-link:hover,
+.delete-link:hover {
+  background-color: #e0e0e0; /* Light background on hover */
+  color: #0056b3; /* Darker shade on hover */
+}
+
+.total-bookings {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #444; /* Dark background for total bookings */
+  text-align: center;
+  color: #fff;
+  border-radius: 10px;
+}
