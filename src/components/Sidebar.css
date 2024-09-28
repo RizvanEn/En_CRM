@@ -1,0 +1,112 @@
+.sidebar-logo {
+  width: 100%; /* Adjust width as needed */
+  height: auto; /* Maintain aspect ratio */
+  margin-bottom: 20px; /* Space below the logo */
+  padding: 0 15px; /* Side padding */
+  display: block;
+}
+
+/* Sidebar container */
+.sidebar {
+  background-color: #0b0135; /* Dark sidebar background */
+  color: #ffffff; /* White text for contrast */
+  height: calc(100vh - 20px); /* Full vertical height minus margin */
+  width: 260px; /* Sidebar width */
+  padding: 10px 0; /* Reduced top and bottom padding */
+  position: fixed; /* Fix sidebar position */
+  top: 10px; /* Distance from the top */
+  left: 10px; /* Distance from the left */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* Align items to the top */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  border-radius: 15px; /* Rounded edges */
+  margin-bottom: 10px; /* Set the bottom margin */
+}
+
+
+/* Sidebar header styling */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: center; /* Center the title */
+  margin-bottom: 20px; /* Space under the header */
+  padding: 0 15px;
+}
+
+.sidebar-header h2 {
+  font-size: 18px; /* Adjusted font size */
+  font-weight: bold;
+  color: #ffffff;
+  margin: 0;
+}
+
+/* Menu styling */
+.sidebar-menu {
+  list-style-type: none; /* Remove default list styling */
+  padding-left: 15px;
+  padding-right: 15px;
+  margin: 0;
+}
+
+.sidebar-menu li {
+  margin-bottom: 15px; /* Space between menu items */
+}
+
+/* Each menu item styling */
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 15px; /* Add padding */
+  color: #b3b3b3; /* Grey text */
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Hover effect */
+}
+
+.menu-item i {
+  margin-right: 10px;
+  font-size: 18px; /* Icon size */
+}
+
+.menu-item.active {
+  background-color: #007bff; /* Active menu background */
+  color: #ffffff; /* Active menu text color */
+}
+
+/* Existing menu item styles for hover */
+.menu-item:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+  color: #ffffff; /* White text on hover */
+}
+
+/* Upgrade button styling */
+.sidebar-upgrade-btn {
+  background: linear-gradient(135deg, #1d9bf0, #007bff); /* Gradient button */
+  color: #ffffff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 15px; /* Margin to align with the menu */
+}
+
+.sidebar-upgrade-btn:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+/* Responsive Sidebar (Optional) */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+}

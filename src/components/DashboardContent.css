@@ -1,0 +1,162 @@
+/* Container for the dashboard */
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  box-sizing: border-box;
+  flex-grow: 1; /* Allow this to grow and fill available space */
+}
+
+/* Top row stats cards */
+.stats-row {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.card {
+  background-color: #ffffff; /* White background for cards */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(187, 158, 158, 0.1); /* Subtle shadow */
+  flex: 1 1 22%; /* Each card takes 22% width */
+  min-width: 250px; /* Prevent the cards from shrinking too much */
+  padding: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.card-icon {
+  padding: 15px;
+  border-radius: 10px;
+  background-color: #f5f5f5; /* Light background for icon */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bookings-icon { background-color: #000; }
+.users-icon { background-color: #007bff; }
+.revenue-icon { background-color: #28a745; }
+.followers-icon { background-color: #ff4757; }
+
+.card-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-info h3 {
+  font-size: 18px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.card-info p {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0;
+  color: #000;
+}
+
+.card-update {
+  font-size: 12px;
+  color: gray;
+}
+
+/* Charts section */
+.charts-row {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.chart-container {
+  background-color: #ffffff; /* White background for charts */
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  flex: 1 1 30%; /* Ensure each chart takes up 30% of the row */
+  min-width: 300px; /* Prevent charts from shrinking too much */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.line-chart { background-color: #f5f5f5; }
+.green-chart { background-color: #28a745; }
+.dark-chart { background-color: #1e1e2f; }
+
+.chart-container h4 {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+}
+
+.chart-container p {
+  font-size: 14px;
+  color: gray;
+}
+
+/* Bottom row: Projects and orders overview */
+.bottom-row {
+  display: flex;
+  gap: 20px;
+  justify-content: space-between;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.projects, .orders-overview {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  flex: 1 1 48%; /* Ensure each takes up 48% of the row */
+  padding: 20px;
+  min-width: 300px; /* Prevent them from shrinking too much */
+}
+
+.projects h4, .orders-overview h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.project-details .project, .orders-overview .order-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.project .company-name, .order-item .order-desc {
+  font-weight: bold;
+  color: #333;
+}
+
+.project .budget, .order-item .order-date {
+  color: gray;
+}
+
+.order-status {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.green { background-color: #28a745; }
+.red { background-color: #ff4757; }
+.blue { background-color: #007bff; }
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .stats-row, .charts-row, .bottom-row {
+    flex-direction: column; /* Stack rows vertically on smaller screens */
+  }
+
+  .card, .chart-container, .projects, .orders-overview {
+    flex: 1 1 100%; /* Full width for each item on small screens */
+  }
+}
