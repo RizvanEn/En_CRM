@@ -17,7 +17,8 @@ const AddBooking = ({ onClose }) => {
     paymentDate: '',
     pan: '',
     gst: '',
-    notes: ''
+    notes: '',
+    bank:''
   });
 
   const [errors, setErrors] = useState({});
@@ -116,6 +117,7 @@ const AddBooking = ({ onClose }) => {
           gst: formData.gst,
           remark: formData.notes,
           date: new Date(formData.date.split('-').reverse().join('-')),
+          bank:formData.bank
         };
 
         const apiEndpoint = 'https://crm-backend-6kqk.onrender.com/booking/addbooking';
@@ -308,6 +310,17 @@ const AddBooking = ({ onClose }) => {
   />
   {errors.gst && <p className="error">{errors.gst}</p>} {/* Display the GST error */}
 </div>
+      <div className="form-group">
+        <label>Bank Name</label>
+        <input
+          type="text"
+          name="bank"
+          value={formData.bank}
+          onChange={handleChange}
+          placeholder="Enter company name"
+        />
+        {errors.bank && <p className="error">{errors.bank}</p>}
+      </div>
 
       <div className="form-group">
         <label>Notes</label>
