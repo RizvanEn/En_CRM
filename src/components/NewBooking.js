@@ -18,7 +18,8 @@ const AddBooking = ({ onClose }) => {
     pan: '',
     gst: '',
     notes: '',
-    bank:''
+    bank:'',
+    status:''
   });
 
   const [errors, setErrors] = useState({});
@@ -117,7 +118,8 @@ const AddBooking = ({ onClose }) => {
           gst: formData.gst,
           remark: formData.notes,
           date: new Date(formData.date.split('-').reverse().join('-')),
-          bank:formData.bank
+          bank:formData.bank,
+          status:'Pending'
         };
 
         const apiEndpoint = 'https://crm-backend-6kqk.onrender.com/booking/addbooking';
