@@ -23,9 +23,9 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
   position: relative;
   overflow: hidden;
-  width: 1200px; /* Increased width */
+  width: 1200px;
   max-width: 100%;
-  min-height: 750px; /* Increased height */
+  min-height: 750px;
   padding: 30px;
   display: flex;
   justify-content: space-between;
@@ -51,12 +51,12 @@ body {
 }
 
 .container button {
-  background-color: #512da8;
+  background-color: #1c0869; /* Updated color */
   color: #fff;
-  font-size: 18px; /* Larger button text */
-  padding: 15px 60px; /* Increased padding for a larger button */
+  font-size: 18px;
+  padding: 15px 60px;
   border: 1px solid transparent;
-  border-radius: 10px; /* Slightly more rounded */
+  border-radius: 10px;
   font-weight: 600;
   letter-spacing: 0.5px;
   text-transform: uppercase;
@@ -80,19 +80,19 @@ body {
 }
 
 .container input {
-    background-color: #eee;
-    border: none;
-    margin: 12px 0; /* Increased margin */
-    padding: 18px 25px; /* Increased padding for larger input fields */
-    font-size: 20px; /* Larger font size */
-    border-radius: 10px;
-    /* width: 100%; Change this to the desired percentage or fixed width */
-    width: 400px; /* Optional: limit the maximum width */
-    outline: none;
-    display: block;
-    margin-left: auto;
-    margin-right: auto; /* Center the input fields */
-  }
+  background-color: #eee;
+  border: none;
+  margin: 12px 0;
+  padding: 18px 25px;
+  font-size: 20px;
+  border-radius: 10px;
+  width: 400px;
+  outline: none;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .form-container {
   position: absolute;
   top: 0;
@@ -140,24 +140,24 @@ body {
 .social-icons {
   margin: 20px 0;
   display: flex;
-  justify-content: center; /* Centers the icons horizontally */
-  gap: 20px; /* Adds even spacing between buttons */
-  flex-wrap: wrap; /* Allows wrapping if there isn't enough space */
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
 .social-icons button {
   border: 1px solid #ccc;
-  border-radius: 8px; /* Slightly rounded square buttons */
+  border-radius: 8px;
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  width: 60px; /* Increased size */
-  height: 60px; /* Increased size */
+  width: 60px;
+  height: 60px;
   background-color: #fff;
   color: #333;
   cursor: pointer;
   transition: background-color 0.3s ease, border-color 0.3s ease;
-  font-size: 24px; /* Increased icon size */
+  font-size: 24px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -166,7 +166,7 @@ body {
 }
 
 .social-icons .icon svg {
-  font-size: 24px; /* Adjust icon size */
+  font-size: 24px;
 }
 
 .toggle-container {
@@ -187,9 +187,9 @@ body {
 }
 
 .toggle {
-  background-color: #512da8;
+  background-color: #1c0869; /* Start with primary dark purple */
   height: 100%;
-  background: linear-gradient(to right, #5c6bc0, #512da8);
+  background: linear-gradient(to right, #1c0869, #1c0869); /* Gradient from dark purple to vibrant purple */
   color: #fff;
   position: relative;
   left: -100%;
@@ -238,13 +238,13 @@ body {
 /* Error and success message styling */
 .error {
   color: red;
-  font-size: 14px; /* Larger error text */
+  font-size: 14px;
   margin-top: 5px;
 }
 
 .success-message {
   color: green;
-  font-size: 16px; /* Larger success text */
+  font-size: 16px;
   text-align: center;
   margin-bottom: 15px;
 }

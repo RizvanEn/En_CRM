@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './NewBooking.css';
 import { enqueueSnackbar } from 'notistack';
 
-const AddBooking = ({ onClose }) => {
+const EditBooking = ({ initialData, onClose }) => {
   const [formData, setFormData] = useState({
     branch: '',
     companyName: '',
@@ -17,12 +17,33 @@ const AddBooking = ({ onClose }) => {
     paymentDate: '',
     pan: '',
     gst: '',
-    bank: '',  
     notes: ''
   });
 
   const [errors, setErrors] = useState({});
 
+  // Populate the form with initialData if available
+  useEffect(() => {
+    if (initialData) {
+      setFormData({
+        branch: initialData.branch_name || '',
+        companyName: initialData.company_name ? initialData.company_name.toUpperCase() : '', 
+        contactPerson: initialData.contact_person || '',
+        contactNumber: initialData.contact_no || '',
+        email: initialData.email || '',
+        date: initialData.date ? new Date(initialData.date).toLocaleDateString('en-GB').split('/').reverse().join('-') : '', // format to 'dd-mm-yyyy',
+        services: initialData.services || '',
+        totalAmount: initialData.total_amount || '',
+        selectTerm: initialData.term_1 ? 'Term 1' : initialData.term_2 ? 'Term 2' : '',
+        amount: initialData.term_1 || initialData.term_2 || '',
+        paymentDate: initialData.term_1_payment_date || '',
+        pan: initialData.pan || '',
+        gst: initialData.gst || '',
+        notes: initialData.remark || ''
+      });
+    }
+  }, [initialData]);
+  
   // Handle input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -30,118 +51,88 @@ const AddBooking = ({ onClose }) => {
       ...formData,
       [name]: value,
     });
-
-    // Log the bank value whenever it changes
-    if (name === 'bank') {
-      console.log('Bank Name Input:', value);  // Log bank input changes
-    }
   };
 
-  // Form validation
+  // Validate form
   const validate = () => {
     let validationErrors = {};
-
     if (!formData.branch) validationErrors.branch = "Branch is required";
     if (!formData.companyName) validationErrors.companyName = "Company Name is required";
     if (!formData.contactPerson) validationErrors.contactPerson = "Contact Person is required";
-
-    const contactNumberRegex = /^\d{10}$/;
-    if (!formData.contactNumber || !contactNumberRegex.test(formData.contactNumber)) {
-      validationErrors.contactNumber = "Valid Contact Number is required (10 digits, no spaces)";
-    }
-
+    if (!formData.contactNumber || isNaN(formData.contactNumber)) validationErrors.contactNumber = "Valid Contact Number is required";
     if (!formData.email) validationErrors.email = "Email is required";
     if (!formData.date) validationErrors.date = "Date is required";
-
-    if (!formData.totalAmount || isNaN(formData.totalAmount)) {
-      validationErrors.totalAmount = "Valid Total Amount is required";
-    }
-
+    if (!formData.totalAmount || isNaN(formData.totalAmount)) validationErrors.totalAmount = "Valid Total Amount is required";
     if (!formData.selectTerm) validationErrors.selectTerm = "Select Term is required";
-    if (!formData.amount || isNaN(formData.amount)) {
-      validationErrors.amount = "Valid Amount is required";
-    }
-
+    if (!formData.amount || isNaN(formData.amount)) validationErrors.amount = "Valid Amount is required";
     if (!formData.paymentDate) validationErrors.paymentDate = "Payment Date is required";
-
-    const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
-    if (formData.pan && !panRegex.test(formData.pan)) {
-      validationErrors.pan = "Valid PAN is required (10 characters, no spaces, no special characters)";
-    }
-
-    const gstRegex = /^[A-Z0-9]{15}$/;
-    if (!formData.gst) {
-      validationErrors.gst = "GST is required";
-    } else if (!gstRegex.test(formData.gst)) {
-      validationErrors.gst = "Valid GST is required (15 alphanumeric characters, no spaces, no special characters)";
-    }
-
-    if (!formData.bank) validationErrors.bank = "Bank name is required";  // Ensure bank validation
 
     setErrors(validationErrors);
     return Object.keys(validationErrors).length === 0;
   };
 
-  // Handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
-
+  
     if (validate()) {
       const userSession = JSON.parse(localStorage.getItem('userSession'));
-
+  
       if (userSession) {
         const dataToSubmit = {
           user_id: userSession.user_id,
           branch_name: formData.branch,
-          company_name: formData.companyName.toUpperCase(),
+          company_name: formData.companyName,
           contact_person: formData.contactPerson,
           email: formData.email,
           contact_no: Number(formData.contactNumber),
           services: formData.services,
           total_amount: Number(formData.totalAmount),
-          term_1: formData.selectTerm === "Term 1" ? Number(formData.amount) : null,
-          term_2: formData.selectTerm === "Term 2" ? Number(formData.amount) : null,
-          term_3: null,
-          term_1_payment_date: formData.paymentDate,
-          term_2_payment_date: null,
-          term_3_payment_date: null,
+          term_1: formData.selectTerm === "Term 1" ? Number(formData.amount) : initialData.term_1 || null,
+          term_2: formData.selectTerm === "Term 2" ? Number(formData.amount) : initialData.term_2 || null,
+          term_3: formData.selectTerm === "Term 3" ? Number(formData.amount) : null, // Ensure Term 3 is handled correctly
           pan: formData.pan,
           gst: formData.gst,
-          bank: formData.bank,  
           remark: formData.notes,
           date: new Date(formData.date.split('-').reverse().join('-')),
         };
-
-        const apiEndpoint = 'https://crm-backend-6kqk.onrender.com/booking/addbooking';
-
+  
+        const apiEndpoint = `https://crm-backend-6kqk.onrender.com/booking/editbooking/${initialData._id}`; // Adjust to your actual endpoint
+  
         fetch(apiEndpoint, {
-          method: 'POST',
+          method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',
+            'user-role': userSession.user_role, // Add user role to headers
           },
           body: JSON.stringify(dataToSubmit),
         })
-        .then((response) => response.json())
-        .then((res) => {
-          console.log(res.status);
-          enqueueSnackbar('Booking created successfully!', { variant: 'success' });
-          if (onClose) onClose();
-        })
-        .catch((error) => {
-          console.error('Error:', error);
-          enqueueSnackbar(`Error creating booking: ${error.message}`, { variant: 'error' });
-        });
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error('Error updating booking');
+            }
+            return response.json();
+          })
+          .then(() => {
+            enqueueSnackbar('Booking Updated successfully!', { variant: 'success' }); // Use notistack's success notification
+            if (onClose) onClose(); // Close the form after submission
+          })
+          .catch((error) => {
+            console.error('Error:', error);
+            enqueueSnackbar(`Error creating booking: ${error.message}`, { variant: 'error' }); // Use notistack's error notification
+          });
       } else {
-        enqueueSnackbar('User session not found. Please log in again.', { variant: 'warning' });
+        enqueueSnackbar('User session not found. Please log in again.', { variant: 'warning' }); // Use notistack's warning notification
       }
     }
   };
+  
+
 
   return (
     <form className="booking-form" onSubmit={handleSubmit}>
-      <h2>Create New Booking</h2>
+      <h2>Edit Booking</h2>
 
-      {/* Form input fields */}
+      {/* Form input fields (keep them unchanged) */}
       <div className="form-group">
         <label>Branch</label>
         <select name="branch" value={formData.branch} onChange={handleChange}>
@@ -180,7 +171,7 @@ const AddBooking = ({ onClose }) => {
       <div className="form-group">
         <label>Contact Number</label>
         <input
-          type="Number"
+          type="text"
           name="contactNumber"
           value={formData.contactNumber}
           onChange={handleChange}
@@ -278,7 +269,6 @@ const AddBooking = ({ onClose }) => {
           onChange={handleChange}
           placeholder="Enter PAN"
         />
-        {errors.pan && <p className="error">{errors.pan}</p>}
       </div>
 
       <div className="form-group">
@@ -290,19 +280,6 @@ const AddBooking = ({ onClose }) => {
           onChange={handleChange}
           placeholder="Enter GST"
         />
-        {errors.gst && <p className="error">{errors.gst}</p>}
-      </div>
-
-      <div className="form-group">
-        <label>Bank Name</label>  {/* Bank field */}
-        <input
-          type="text"
-          name="bank"
-          value={formData.bank}
-          onChange={handleChange}
-          placeholder="Enter Bank Name"
-        />
-        {errors.bank && <p className="error">{errors.bank}</p>}
       </div>
 
       <div className="form-group">
@@ -316,9 +293,9 @@ const AddBooking = ({ onClose }) => {
         ></textarea>
       </div>
 
-      <button className="submit-btn" type="submit">Submit</button>
+      <button className="submit-btn" type="submit">Update</button>
     </form>
   );
 };
 
-export default AddBooking;
+export default EditBooking;

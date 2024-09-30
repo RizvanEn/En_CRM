@@ -4,10 +4,9 @@
   flex-direction: column;
   gap: 20px;
   padding: 20px;
-  margin-left: 10px; 
-  max-width: 1100px;
-  margin: 0 auto;
   box-sizing: border-box;
+  flex-grow: 1; /* Allow this to grow and fill available space */
+  max-width: 100%; /* Ensure the container doesn't exceed the screen size */
 }
 
 /* Top row stats cards */
@@ -23,11 +22,11 @@
   border-radius: 10px;
   box-shadow: 0 4px 10px rgba(187, 158, 158, 0.1); /* Subtle shadow */
   flex: 1 1 22%; /* Each card takes 22% width */
-  min-width: 200px; /* Prevent the cards from shrinking too much */
-  padding: 20px;
+  min-width: 250px; /* Prevent the cards from shrinking too much */
+  padding: 30px;
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
 }
 
 .card-icon {
@@ -37,6 +36,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0; /* Prevent icon from shrinking */
 }
 
 .bookings-icon { background-color: #000; }
@@ -153,12 +153,60 @@
 .blue { background-color: #007bff; }
 
 /* Responsive adjustments */
+@media (max-width: 1024px) {
+  /* For tablets or smaller */
+  .card-info p {
+    font-size: 20px; /* Slightly smaller font for stats */
+  }
+
+  .chart-container {
+    flex: 1 1 45%; /* Adjust chart size to take up more space */
+  }
+}
+
 @media (max-width: 768px) {
+  /* For mobile screens */
   .stats-row, .charts-row, .bottom-row {
     flex-direction: column; /* Stack rows vertically on smaller screens */
   }
 
   .card, .chart-container, .projects, .orders-overview {
     flex: 1 1 100%; /* Full width for each item on small screens */
+    margin-bottom: 20px; /* Add space between items */
+  }
+
+  .card-info p {
+    font-size: 18px; /* Reduce size on mobile */
+  }
+
+  .card-info h3 {
+    font-size: 16px; /* Reduce size on mobile */
+  }
+
+  .chart-container h4 {
+    font-size: 16px;
+  }
+
+  .chart-container p {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  /* For extra small screens (mobile) */
+  .card-info p {
+    font-size: 16px; /* Smaller font for extra small screens */
+  }
+
+  .card-info h3 {
+    font-size: 14px;
+  }
+
+  .chart-container h4 {
+    font-size: 14px;
+  }
+
+  .chart-container p {
+    font-size: 12px;
   }
 }

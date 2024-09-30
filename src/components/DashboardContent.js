@@ -1,8 +1,64 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import LineChart from '../components/LineChart'; // Ensure you have these chart components
 import './DashboardContent.css';
 
+const BaseUrl = 'https://crm-backend-6kqk.onrender.com'; // Your backend URL
+
 const DashboardContent = () => {
+  const [totalBookings, setTotalBookings] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0); // State to store total revenue
+  const [userRole, setUserRole] = useState(''); // Keep userRole if needed for conditional rendering
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const userSession = JSON.parse(localStorage.getItem('userSession'));
+
+    if (userSession && userSession.user_id) {
+      setUserRole(userSession.user_role);
+      fetchTotalBookings(userSession); // Fetch total bookings and calculate revenue
+    } else {
+      console.error('User session not found.');
+      setLoading(false);
+    }
+  }, []);
+
+  // Fetch total bookings and calculate total revenue
+  const fetchTotalBookings = (userSession) => {
+    setLoading(true);
+
+    // Construct the correct API endpoint based on user role
+    const url = ['admin', 'dev', 'senior admin'].includes(userSession.user_role)
+      ? `${BaseUrl}/booking/all`
+      : `${BaseUrl}/user/bookings/${userSession.user_id}`;
+
+    fetch(url)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const bookingsData = data.Allbookings || data;
+
+        // Calculate the total bookings and revenue
+        const totalBookingCount = bookingsData.length || 0;
+        const totalRevenueAmount = bookingsData.reduce((acc, booking) => acc + booking.total_amount, 0);
+
+        setTotalBookings(totalBookingCount);
+        setTotalRevenue(totalRevenueAmount);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching total bookings:', error);
+        setLoading(false);
+      });
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div className="dashboard-container">
       {/* Top Row: Stats Cards */}
@@ -13,8 +69,8 @@ const DashboardContent = () => {
           </div>
           <div className="card-info">
             <h3>Bookings</h3>
-            <p>281</p>
-            <span className="card-update">+55% than last week</span>
+            <p>{totalBookings}</p>
+            <span className="card-update">Your Total Bookings</span>
           </div>
         </div>
         <div className="card">
@@ -22,7 +78,7 @@ const DashboardContent = () => {
             <i className="fas fa-chart-bar"></i>
           </div>
           <div className="card-info">
-            <h3>Today's Users</h3>
+            <h3>Total Users</h3>
             <p>2,300</p>
             <span className="card-update">+3% than last month</span>
           </div>
@@ -33,8 +89,8 @@ const DashboardContent = () => {
           </div>
           <div className="card-info">
             <h3>Revenue</h3>
-            <p>34k</p>
-            <span className="card-update">+1% than yesterday</span>
+            <p>{totalRevenue.toLocaleString()} INR</p>
+            <span className="card-update">Total Revenue</span>
           </div>
         </div>
         <div className="card">
@@ -48,6 +104,14 @@ const DashboardContent = () => {
           </div>
         </div>
       </div>
+
+      {/* Conditionally render content based on userRole */}
+      {userRole === 'admin' && (
+        <div className="admin-section">
+          <h4>Admin Dashboard Section</h4>
+          {/* Additional content for admin users */}
+        </div>
+      )}
 
       {/* Middle Row: Charts */}
       <div className="charts-row">

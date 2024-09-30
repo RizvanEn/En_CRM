@@ -1,91 +1,21 @@
 .booking-form {
-  background-color: #333;
-  padding: 30px;
-  border-radius: 8px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 20px;
-  max-width: 1500px;
-  margin: 0 auto;
-}
-
-.booking-form h2 {
-  grid-column: span 2;
-  color: #fff;
-  text-align: center;
-  margin-bottom: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-
-.form-group label {
-  color: #fff;
-  margin-bottom: 5px;
-}
-
-.form-group input,
-.form-group select,
-.form-group textarea {
-  padding: 10px;
-  border: 1px solid #555;
-  border-radius: 4px;
-  background-color: #444;
-  color: #fff;
-  font-size: 16px;
-  outline: none;
-}
-
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  border-color: #007bff;
-}
-
-.submit-btn {
-  grid-column: span 2;
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-}
-
-.submit-btn:hover {
-  background-color: #0056b3;
-}
-
-/* Responsive design adjustments */
-@media (max-width: 768px) {
-  .booking-form {
-      grid-template-columns: 1fr;
-  }
-
-  .submit-btn {
-      grid-column: span 1;
-  }
-}
-.booking-form {
-  background-color: #333;
-  padding: 30px;
-  border-radius: 8px;
+  background-color: #f7f7f7; /* Light grey for the background */
+  padding: 20px;
+  border-radius: 10px; /* Slightly increased border radius for a softer look */
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 20px;
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 20px auto; /* Added margin to space from top */
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
 }
 
 .booking-form h2 {
   grid-column: span 2;
-  color: #fff;
+  color: #1c0869; /* Dark blue color for the title */
   text-align: center;
   margin-bottom: 20px;
+  font-family: 'Arial', sans-serif; /* Change to a modern font */
 }
 
 .form-group {
@@ -94,48 +24,61 @@
 }
 
 .form-group label {
-  color: #fff;
+  color: #333; /* Darker color for better readability */
   margin-bottom: 5px;
+  font-weight: bold; /* Make labels bold */
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-  padding: 10px;
-  border: 1px solid #555;
-  border-radius: 4px;
-  background-color: #444;
-  color: #fff;
+  padding: 12px; /* Slightly increased padding for better touch target */
+  border: 1px solid #ccc; /* Light grey border */
+  border-radius: 6px; /* Softer corners */
+  background-color: #ffffff; /* White background for input elements */
+  color: #333; /* Dark text for readability */
   font-size: 16px;
   outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Smooth border transition */
 }
 
 .form-group input:focus,
 .form-group select:focus,
 .form-group textarea:focus {
-  border-color: #007bff;
+  border-color: #1c0869; /* Dark blue border on focus */
+  box-shadow: 0 0 8px rgba(28, 8, 105, 0.5); /* Subtle glow effect */
+}
+
+.form-group select {
+  appearance: none; /* Remove default dropdown arrow */
+  background-image: url('data:image/svg+xml;charset=UTF-8,%3Csvg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"%3E%3Cpath stroke="%231c0869" stroke-width="2" d="M6 9l6 6 6-6" /%3E%3C/svg%3E'); /* Custom dropdown arrow */
+  background-repeat: no-repeat;
+  background-position: right 10px center; /* Position the arrow */
+  background-size: 12px; /* Size of the dropdown arrow */
 }
 
 .submit-btn {
   grid-column: span 2;
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 20px;
+  background-color: #1c0869; /* Dark blue for the button */
+  color: #ffffff;
+  padding: 12px 20px; /* Increased padding */
   border: none;
-  border-radius: 4px;
+  border-radius: 6px; /* Softer corners */
   cursor: pointer;
   font-size: 16px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s; /* Smooth transition */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Shadow for button */
 }
 
 .submit-btn:hover {
-  background-color: #0056b3;
+  background-color: #0e0056; /* Darker shade on hover */
+  transform: translateY(-2px); /* Lift effect on hover */
 }
 
 /* Responsive design adjustments */
 @media (max-width: 768px) {
   .booking-form {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr; /* Stack inputs vertically on small screens */
   }
 
   .submit-btn {

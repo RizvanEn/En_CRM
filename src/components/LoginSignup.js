@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import './LoginSignup.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faFacebookF } from '@fortawesome/free-brands-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/WhiteEnego.png'; // Adjust the path based on your folder structure
 
 const API_URL = "https://crm-backend-6kqk.onrender.com";
 
@@ -13,10 +14,33 @@ const LoginSignup = ({ onLoginSuccess }) => {
   const [loading, setLoading] = useState(false); // To show loading state during API calls
   const navigate = useNavigate();
 
+  // Logout user wrapped with useCallback to prevent function recreation
+  const logoutUser = useCallback(() => {
+    localStorage.removeItem('userSession');
+    console.log("Session expired. Logging out...");
+    navigate('/login');
+  }, [navigate]); // Add 'navigate' as a dependency
+
   // Check session on component load
   useEffect(() => {
-    checkSession();
-  }, []);
+    const checkSession = () => {
+      const session = JSON.parse(localStorage.getItem('userSession'));
+      if (session) {
+        const currentTime = Date.now();
+        const loginTime = session.loginTime;
+
+        // Check if session is older than 20 hours
+        if (currentTime - loginTime >= 20 * 60 * 60 * 1000) {
+          logoutUser();
+        } else {
+          const remainingTime = 20 * 60 * 60 * 1000 - (currentTime - loginTime);
+          setTimeout(logoutUser, remainingTime);
+        }
+      }
+    };
+
+    checkSession(); // Call checkSession
+  }, [logoutUser]); // Add logoutUser to the dependency array
 
   // Toggle between Sign Up and Sign In
   const handleRegisterClick = () => {
@@ -165,30 +189,6 @@ const LoginSignup = ({ onLoginSuccess }) => {
     setFormData({ email: '', password: '', name: '', phone: '' });
   };
 
-  // Logout user
-  const logoutUser = () => {
-    localStorage.removeItem('userSession');
-    console.log("Session expired. Logging out...");
-    navigate('/login');
-  };
-
-  // Check session on app load
-  const checkSession = () => {
-    const session = JSON.parse(localStorage.getItem('userSession'));
-    if (session) {
-      const currentTime = Date.now();
-      const loginTime = session.loginTime;
-
-      // Check if session is older than 20 hours
-      if (currentTime - loginTime >= 20 * 60 * 60 * 1000) {
-        logoutUser();
-      } else {
-        const remainingTime = 20 * 60 * 60 * 1000 - (currentTime - loginTime);
-        setTimeout(logoutUser, remainingTime);
-      }
-    }
-  };
-
   return (
     <div className={`container ${isActive ? 'active' : ''}`} id="container">
       {/* Signup Form */}
@@ -304,9 +304,9 @@ const LoginSignup = ({ onLoginSuccess }) => {
             <button className="hidden" onClick={handleLoginClick} disabled={loading}>Sign In</button>
           </div>
           <div className="toggle-panel toggle-right">
-            <h1>Hello, Friend!</h1>
-            <p>Register with your personal details to use all of the site features</p>
-            <button className="hidden" onClick={handleRegisterClick} disabled={loading}>Sign Up</button>
+            {/* Add your logo here */}
+            <img src={logo} alt="Company Logo" style={{ width: '500px', marginBottom:'10px' }} />
+            <button className="hidden" onClick={handleRegisterClick} disabled={loading}>Sign Up</button> {/* Uncomment to use */}
           </div>
         </div>
       </div>
