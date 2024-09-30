@@ -3,7 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import LoginSignup from './components/LoginSignup';
 import Dashboard from './Pages/Dashboard';
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import { SnackbarProvider, enqueueSnackbar } from 'notistack';
+import { SnackbarProvider } from 'notistack';
 
 const LOGIN_DURATION = 20 * 60 * 60 * 1000; // 20 hours in milliseconds
 
@@ -44,20 +44,33 @@ function App() {
     setIsAuthenticated(false);
     localStorage.removeItem('isAuthenticated');  // Remove login state
     localStorage.removeItem('loginTime');  // Remove login timestamp
+    localStorage.removeItem('userSession'); // Remove user session data
   };
 
   return (
     <SnackbarProvider>
-    <Routes>
-      <Route
-        path="/"
-        element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginSignup onLoginSuccess={handleLoginSuccess} />}
-      />
-      <Route
-        path="/dashboard/*"  // Wildcard * to handle all nested routes
-        element={isAuthenticated ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/" />}
-      />
-    </Routes>
+      <Routes>
+        {/* Public route: Login and Signup */}
+        <Route
+          path="/login/*" // Wildcard * to handle nested login routes like /login/dashboard
+          element={<LoginSignup onLoginSuccess={handleLoginSuccess} />}
+        />
+        
+        {/* Protected route: Dashboard */}
+        <Route
+          path="/dashboard/*"  // Wildcard * to handle all nested routes under /dashboard
+          element={isAuthenticated ? <Dashboard onLogout={handleLogout} /> : <Navigate to="/" />}
+        />
+
+        {/* Root route: If authenticated, go to dashboard, else show login/signup */}
+        <Route
+          path="/"
+          element={isAuthenticated ? <Navigate to="/dashboard" /> : <LoginSignup onLoginSuccess={handleLoginSuccess} />}
+        />
+
+        {/* Catch-all route: Redirect unknown routes to the root */}
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
     </SnackbarProvider>
   );
 }
