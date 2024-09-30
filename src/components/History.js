@@ -149,6 +149,7 @@ const History = () => {
               <p><strong>Total Amount:</strong> {booking.total_amount}</p>
               <p><strong>Received Amount:</strong> {booking.term_1 + booking.term_2 + booking.term_3}</p>
               <p><strong>Gst</strong> {booking.gst}</p>
+              <p><strong>Bank Name</strong> {booking.bank}</p>
             </div>
             {/* Show the Edit button and Delete button only for dev, senior admin, and admin */}
             {['dev', 'senior admin', 'admin'].includes(userRole) && (
