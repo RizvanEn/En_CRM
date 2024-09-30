@@ -128,10 +128,18 @@ const AddBooking = ({ onClose }) => {
           body: JSON.stringify(dataToSubmit),
         })
         .then((response) => {
+          // console.log(response)
+        
+          // return response.json()
+          if(!response.ok){
+            enqueueSnackbar(`Error creating booking`, { variant: 'error' });
+          }else{
+            enqueueSnackbar('Booking created successfully!', { variant: 'success' });
+          }
+         
           return response.json()
         }).then((res)=>{
-          console.log(res.status);
-          enqueueSnackbar('Booking created successfully!', { variant: 'success' }); // Use notistack's success notification
+          // Use notistack's success notification
           if (onClose) onClose(); // Close the form after submission
 
         })

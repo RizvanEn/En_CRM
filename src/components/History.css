@@ -7,6 +7,9 @@
   max-width: calc(100%); /* Fill the available width */
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Soft shadow for depth */
 }
+button{
+  cursor: pointer;
+}
 
 .history-header {
   font-size: 32px;
@@ -100,4 +103,27 @@
   text-align: center;
   color: #fff;
   border-radius: 10px;
+}
+.booking-item{
+  background-color: #ccffdd;
+}
+.edit-link{
+  border: none;
+  background: #0066ff;
+  color: #ffff;
+  margin-right: 5px;
+}
+.edit-link:hover{
+  background-color: #3385ff;
+  color: #ffff;
+}
+
+.delete-link{
+  border: none;
+  background-color: #ff0000; 
+  color: #ffff;
+}
+.delete-link:hover{
+  background-color: #ff4d4d;
+  color: #ffff; 
 }
